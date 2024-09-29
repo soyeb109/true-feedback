@@ -1,0 +1,27 @@
+[
+  {
+    "title": "Welcome to the Platform",
+    "content": "Thank you for signing up! We're excited to have you on board.",
+    "received": "2024-09-01"
+  },
+  {
+    "title": "Account Verification",
+    "content": "Please verify your email address to activate your account.",
+    "received": "2024-09-02"
+  },
+  {
+    "title": "New Feature Released",
+    "content": "Check out our new dark mode feature available in settings.",
+    "received": "2024-09-05"
+  },
+  {
+    "title": "Subscription Renewal",
+    "content": "Your subscription will renew automatically on 2024-09-10.",
+    "received": "2024-09-07"
+  },
+  {
+    "title": "Security Alert",
+    "content": "We detected a login attempt from an unknown device.",
+    "received": "2024-09-15"
+  }
+]

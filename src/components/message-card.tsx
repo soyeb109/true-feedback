@@ -4,6 +4,7 @@ import axios, { AxiosError } from "axios";
 import { X } from "lucide-react";
 import { Message } from "@/model/User";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import dayjs from "dayjs";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -74,6 +75,9 @@ export function MessageCard({ message, onMessageDelete }: MessageCardProps) {
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
+        </div>
+        <div className="text-sm">
+          {dayjs(message.createdAt).format("MMM D, YYYY h:mm A")}
         </div>
       </CardHeader>
     </Card>
