@@ -12,21 +12,21 @@ export async function GET(request: Request) {
 
   try {
     const { searchParams } = new URL(request.url);
-    const queryParam = {
+    const queryParams = {
       username: searchParams.get("username"),
     };
-    // validate with zod
-    const result = UsernameQuerySchema.safeParse(queryParam);
 
-    // console.log(result);
+    const result = UsernameQuerySchema.safeParse(queryParams);
 
     if (!result.success) {
       const usernameErrors = result.error.format().username?._errors || [];
       return Response.json(
         {
           success: false,
-          message: "Invalid query parameters",
-          errors: usernameErrors,
+          message:
+            usernameErrors?.length > 0
+              ? usernameErrors.join(", ")
+              : "Invalid query parameters",
         },
         { status: 400 }
       );
@@ -34,21 +34,35 @@ export async function GET(request: Request) {
 
     const { username } = result.data;
 
-    const existingVerfiedUser = await UserModel.findOne({
+    const existingVerifiedUser = await UserModel.findOne({
       username,
       isVerified: true,
     });
-    if (existingVerfiedUser) {
+
+    if (existingVerifiedUser) {
       return Response.json(
-        { success: false, message: "Username already exists" },
-        { status: 400 }
+        {
+          success: false,
+          message: "Username is already taken",
+        },
+        { status: 200 }
       );
     }
-    return Response.json({ success: true, message: "Username available" });
-  } catch (error) {
-    console.log("Error checking username", error);
+
     return Response.json(
-      { success: false, message: "Error checking username" },
+      {
+        success: true,
+        message: "Username is unique",
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Error checking username:", error);
+    return Response.json(
+      {
+        success: false,
+        message: "Error checking username",
+      },
       { status: 500 }
     );
   }
